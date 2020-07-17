@@ -12,7 +12,7 @@ class App extends React.Component {
 
   async componentDidMount(){
     const helloSalutURL = "https://fourtonfish.com/hellosalut/?cc=";
-    const apiKey = "YOUR_API_KEY";
+    const apiKey = "7s85qmeqm45j42";
     const ipFindURL = "https://api.ipregistry.co/?key="+apiKey;
 
     const responseIP = await fetch(ipFindURL)
