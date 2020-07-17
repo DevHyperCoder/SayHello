@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+class App extends React.Component {
+
+  constructor (){
+    super()
+    this.state = {
+      hello: "Hello!"
+    }
+  }
+
+  async componentDidMount(){
+    const helloSalutURL = "https://fourtonfish.com/hellosalut/?cc=";
+    const apiKey = "YOUR_API_KEY";
+    const ipFindURL = "https://api.ipregistry.co/?key="+apiKey;
+
+    const responseIP = await fetch(ipFindURL)
+
+    const ipJSON = await responseIP.json()
+
+    const countryCode = ipJSON.location.country.code
+
+    console.log(countryCode)
+
+    const responseHelloAPI = await fetch(helloSalutURL+countryCode)
+
+    const helloJSON = await responseHelloAPI.json()
+
+    const helloText = helloJSON.hello
+    console.log(helloText)
+
+    this.setState({"hello":helloText})
+
+  }
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>SayHello</h1>
+      <h2 dangerouslySetInnerHTML={{__html: this.state.hello}}></h2>
     </div>
   );
+  }
 }
 
 export default App;
